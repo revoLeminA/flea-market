@@ -17,4 +17,14 @@ class Purchase extends Model
         'shipping_building',
         'payment_method',
     ];
+
+    public function user()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
+    public function item()
+    {
+        return $this->belongsTo(Item::class);
+    }
 }

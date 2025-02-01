@@ -70,6 +70,7 @@
 }
 
 .form-item__img {
+    position: relative;
     width: 100%;
     height: 150px;
     border: 1px dashed black;
@@ -77,10 +78,14 @@
     text-align: center;
 }
 
-.form-item__img img {
-    /* width: 100%; */
-    height: 100%;
-    object-fit: cover;
+#preview img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    height: 150px;
+    z-index: 1;
 }
 
 .form-item__label {
@@ -99,7 +104,7 @@
     box-shadow: 0 8px 10px -2px rgba(0, 0, 0, 0.2);
 }
 
-.form-item__label .form-item__input {
+#item_img {
     display: none;
 }
 
@@ -149,30 +154,80 @@
     background-color: #ff5555;
 }
 
-.form-item__select-wrapper {
+.form-item__select {
     position: relative;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid black;
+    font-size: 14px;
+    cursor: pointer;
+    user-select: none;
 }
 
-.form-item__select-wrapper::after {
-    content: "";
+.form-item__options {
     position: absolute;
-    top: 12px;
-    right: 12px;
-    border-right: 6px solid transparent;
-    border-left: 6px solid transparent;
-    border-top: 12px solid #555;
-    border-bottom: 0;
-    pointer-events: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: none;
+    z-index: 1;
 }
 
-select {
-    -webkit-appearance: none;
-    appearance: none;
+.form-item__option {
+    position: relative;
+    display: block;
+    padding: 8px;
+    padding-left: 26px;
+    color: #eaeaea;
+    background-color: #636769;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.form-item__option input {
+    display: none;
+}
+
+.form-item__option:hover {
+    background-color: #5599eb;
+}
+
+.form-item__option:hover::before {
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    content: "✔ ";
+    font-size: 14px;
+    color: white;
+}
+
+.form-item__select.open .form-item__options {
+    display: block;
 }
 
 textarea {
     resize: none;
     height: 100px;
+}
+
+.form-item:nth-of-type(8) {
+    position: relative;
+}
+
+.yen-mark::before {
+    position: absolute;
+    content: "￥";
+    font-weight: bold;
+    top: 30px;
+    left: 10px;
+}
+
+.yen-mark .form-item__input {
+    padding-left: 30px;
 }
 
 .form__btn {

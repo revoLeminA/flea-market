@@ -9,7 +9,7 @@ use App\Models\Item;
 class ListController extends Controller
 {
     //初期ページへ
-    public function index()
+    public function home()
     {
         $user = Auth::user();
         if(is_null($user->address)){
@@ -25,30 +25,5 @@ class ListController extends Controller
     {
         $items = Item::all();
         return view('list', compact('items'));
-    }
-
-    // マイリスト一覧画面
-    public function mylist()
-    {
-        $items = Item::find([1,2,3,]);
-        return view('list', compact('items'));
-    }
-
-    //商品詳細画面
-    public function detail()
-    {
-        return view('item');
-    }
-
-    //商品購入画面
-    public function purchase()
-    {
-        return view('purchase');
-    }
-
-    //送付先住所変更画面
-    public function address()
-    {
-        return view('address');
     }
 }

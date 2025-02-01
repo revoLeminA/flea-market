@@ -128,21 +128,18 @@
 
     // <input>でファイルが選択されたときの処理
     const fileInput = document.getElementById('profile_img');
-    // changeイベントで呼び出す関数
-    const handleFileSelect = () => {
+    // ファイル選択時に呼び出す関数
+    fileInput.addEventListener('change', () => {
         const files = fileInput.files;
-        for (let i = 0; i < files.length; i++) {
-            previewFile(files[i]); // 1つ1つのファイルデータはfiles[i]で取得できる
+        if (0 < files.length) {
+            previewFile(files[files.length-1]); // 1つ1つのファイルデータはfiles[i]で取得できる
         }
-    }
+    });
 
     // 初期表示としてデフォルト画像を表示
     @isset($user->profile_image)
         document.addEventListener('DOMContentLoaded', displayDefaultImage);
     @endisset
-
-    // ファイル選択時にhandleFileSelectを発火
-    fileInput.addEventListener('change', handleFileSelect);
 </script>
 
 </body>

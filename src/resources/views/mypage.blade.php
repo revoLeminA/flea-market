@@ -39,7 +39,12 @@
         <div class="container">
             <div class="container-top__profile">
                 <div class="container-top__profile-img">
-                    <img src="{{ asset($user->profile_image) }}" >
+                    @isset($user->profile_image)
+                        <img src="{{ asset($user->profile_image) }}">
+                    @endisset
+                    @empty($user->profile_image)
+                        <img alt="未設定" onerror="this.style.display='none'">
+                    @endempty
                 </div>
                 <div class="container-top__profile-name">
                     {{ $user->user_name }}

@@ -12,15 +12,21 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
+use Laravel\Fortify\Contracts\LoginResponse;
 
 class FortifyServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
      */
-    public function register(): void
+    public function register()
     {
-        //
+        $this->app->instance(LoginResponse::class, new class implements LoginResponse {
+        public function toResponse($request)
+            {
+                return redirect('/home');
+            }
+        });
     }
 
     /**

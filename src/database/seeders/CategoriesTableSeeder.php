@@ -84,5 +84,10 @@ class CategoriesTableSeeder extends Seeder
             "id" => 14,
             "category_name" => 'ベビー・キッズ'
         ]);
+
+        Category::create([
+            "id" => 15,
+            "category_name" => 'その他'
+        ]);
     }
 }

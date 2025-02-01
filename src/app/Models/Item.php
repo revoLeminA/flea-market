@@ -19,4 +19,29 @@ class Item extends Model
         'item_image',
         'is_sold',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(Like::class);
+    }
+
+    public function like()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    public function comment()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function purchase()
+    {
+        return $this->hasOne(Purchase::class);
+    }
+
+    public function category()
+    {
+        return $this->hasMany(Category::class);
+    }
 }

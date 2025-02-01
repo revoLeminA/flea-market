@@ -31,6 +31,6 @@ class ProfileController extends Controller
         $profile_data->building = $request->building;
         $profile_data->save();
 
-        return redirect('/mypage/profile');
+        return redirect('/mypage');
     }
 }
