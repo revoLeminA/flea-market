@@ -46,23 +46,33 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function item()
+    public function items()
     {
         return $this->hasMany(Item::class);
     }
 
-    public function like()
+    public function likes()
     {
         return $this->hasMany(Like::class);
     }
 
-    public function comment()
+    public function comments()
     {
         return $this->hasMany(Comment::class);
     }
 
-    public function purchase()
+    public function purchases()
     {
         return $this->hasMany(Purchase::class);
+    }
+
+    public function profileUpload($data, $dir, $file_name)
+    {
+        $this->user_name = $data['user_name'];
+        $this->profile_image = 'storage/' . $dir . '/' . $file_name;
+        $this->postal_code = $data['postal_code'];
+        $this->address = $data['address'];
+        $this->building = $data['building'];
+        $this->save();
     }
 }

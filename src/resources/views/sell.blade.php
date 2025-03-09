@@ -43,7 +43,7 @@
                 <div class="form-item">
                     <label class="form-item__ttl" for="item_img">商品画像</label>
                     <div class="form-item__img" id="preview">
-                        <label for="item_img" class="form-item__label">
+                        <label for="item_img" class="form-item__img-msg">
                             画像を選択する
                             <input type="file" id="item_img" class="form-item__input" name="item_image">
                         </label>
@@ -73,18 +73,18 @@
                 <div class="form-item">
                     <label class="form-item__ttl" for="brand_name">ブランド名</label>
                     <div class="form-item__select">
-                        <span>選択肢を選んでください</span>
+                        <lael class="form-item__select-msg">選択肢を選んでください</lael>
                         <div class="form-item__options">
-                            <label class="form-item__option"><input type="radio" name="brand_name" value="1">Panasonic</label>
-                            <label class="form-item__option"><input type="radio" name="brand_name" value="2">Shiseido</label>
-                            <label class="form-item__option"><input type="radio" name="brand_name" value="3">Elecom</label>
-                            <label class="form-item__option"><input type="radio" name="brand_name" value="4">JA</label>
-                            <label class="form-item__option"><input type="radio" name="brand_name" value="5">Rolex</label>
-                            <label class="form-item__option"><input type="radio" name="brand_name" value="6">COACH</label>
-                            <label class="form-item__option"><input type="radio" name="brand_name" value="7">THERMOS</label>
-                            <label class="form-item__option"><input type="radio" name="brand_names" value="8">Apple</label>
-                            <label class="form-item__option"><input type="radio" name="brand_name" value="9">Anker</label>
-                            <label class="form-item__option"><input type="radio" name="brand_name" value="10">DeLonghi</label>
+                            <label class="form-item__option"><input type="radio" class="form-item__option-input" name="brand_name" value="Panasoni">Panasonic</label>
+                            <label class="form-item__option"><input type="radio" class="form-item__option-input" name="brand_name" value="Shiseido">Shiseido</label>
+                            <label class="form-item__option"><input type="radio" class="form-item__option-input" name="brand_name" value="Elecom">Elecom</label>
+                            <label class="form-item__option"><input type="radio" class="form-item__option-input" name="brand_name" value="JA">JA</label>
+                            <label class="form-item__option"><input type="radio" class="form-item__option-input" name="brand_name" value="Rolex">Rolex</label>
+                            <label class="form-item__option"><input type="radio" class="form-item__option-input" name="brand_name" value="COACH">COACH</label>
+                            <label class="form-item__option"><input type="radio" class="form-item__option-input" name="brand_name" value="THERMOS">THERMOS</label>
+                            <label class="form-item__option"><input type="radio" class="form-item__option-input" name="brand_name" value="Apple">Apple</label>
+                            <label class="form-item__option"><input type="radio" class="form-item__option-input" name="brand_name" value="Anker">Anker</label>
+                            <label class="form-item__option"><input type="radio" class="form-item__option-input" name="brand_name" value="DeLonghi">DeLonghi</label>
                         </div>
                     </div>
                     <div class="form-item__error">
@@ -96,12 +96,12 @@
                 <div class="form-item">
                     <label class="form-item__ttl" for="status">商品の状態</label>
                     <div class="form-item__select">
-                        <span>選択肢を選んでください</span>
+                        <lael class="form-item__select-msg">選択肢を選んでください</lael>
                         <div class="form-item__options">
-                            <label class="form-item__option"><input type="radio" name="status" value="1">良好</label>
-                            <label class="form-item__option"><input type="radio" name="status" value="2">目立った傷や汚れなし</label>
-                            <label class="form-item__option"><input type="radio" name="status" value="3">やや傷や汚れあり</label>
-                            <label class="form-item__option"><input type="radio" name="status" value="4">状態が悪い</label>
+                            <label class="form-item__option"><input type="radio" class="form-item__option-input" name="status" value="1">良好</label>
+                            <label class="form-item__option"><input type="radio" class="form-item__option-input" name="status" value="2">目立った傷や汚れなし</label>
+                            <label class="form-item__option"><input type="radio" class="form-item__option-input" name="status" value="3">やや傷や汚れあり</label>
+                            <label class="form-item__option"><input type="radio" class="form-item__option-input" name="status" value="4">状態が悪い</label>
                         </div>
                     </div>
                     <div class="form-item__error">
@@ -131,7 +131,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="form-item">
+                <div class="form-item yen-mark__parent">
                     <label class="form-item__ttl" for="price">販売価格</label>
                     <div class="yen-mark">
                         <input type="text" class="form-item__input" name="price" value="{{ old('price') }}">
@@ -143,7 +143,6 @@
                     </div>
                 </div>
                 <div class="form__btn">
-                    <input type="hidden" name="user_id" value="{{ $user->id }}">
                     <button class="form__btn-submit" type="submit">出品する</button>
                 </div>
             </form>
@@ -193,32 +192,33 @@
     /*========================================
     セレクトボックスの開閉動作
     ========================================*/
-    const select = document.querySelector('.form-item__select');
-    const dropdown = select.querySelector('.form-item__options');
-    const options = dropdown.querySelectorAll('.form-item__option');
-    const displaySpan = select.querySelector('span');
-    // セレクトボックスの開閉
-    select.addEventListener('click', () => {
-        select.classList.toggle('open');
-    });
-    // オプション選択時の処理
-    options.forEach(option => {
-        const input = option.querySelector('input');
-        option.addEventListener('click', (e) => {
-            e.stopPropagation(); // クリックイベントが親要素に伝播しないようにする
-            // 選択された値を表示
-            displaySpan.textContent = option.textContent.trim();
-            // 選択された値を取得
-            console.log(`選択された値: ${input.value}`);
-            // ドロップダウンを閉じる
-            select.classList.remove('open');
+    const selects = document.querySelectorAll('.form-item__select');
+    // 各セレクトボックスごとの処理
+    selects.forEach(select => {
+        const dropdown = select.querySelector('.form-item__options');
+        const options = dropdown.querySelectorAll('.form-item__option');
+        // セレクトボックスをクリックすると開く
+        select.addEventListener('click', () => {
+            select.classList.add('open');
         });
-    });
-    // ページ外クリックでドロップダウンを閉じる
-    document.addEventListener('click', (e) => {
-        if (!select.contains(e.target)) {
-            select.classList.remove('open');
-        }
+        // 各オプションごとの処理
+        options.forEach(option => {
+            const input = option.querySelector('.form-item__option-input');
+            // オプション選択時の処理
+            option.addEventListener('click', (e) => {
+                const displayMessage = select.querySelector('.form-item__select-msg');
+                e.stopPropagation(); // クリックイベントが親要素に伝播しないようにする
+                displayMessage.textContent = option.textContent; // 選択された値を表示
+                console.log(`選択された値: ${input.value}`); // 選択された値を取得
+                select.classList.remove('open'); // ドロップダウンを閉じる
+            });
+        });
+        // ページ外クリックでドロップダウンを閉じる
+        document.addEventListener('click', (e) => {
+            if (!select.contains(e.target)) {
+                select.classList.remove('open');
+            }
+        });
     });
 </script>
 

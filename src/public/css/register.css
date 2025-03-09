@@ -18,7 +18,6 @@
 .form-item__ttl {
     display: block;
     font-weight: bold;
-    /* margin-bottom: 5px; */
 }
 
 .form-item__input {
@@ -41,12 +40,10 @@
     color: white;
     font-weight: bold;
     border: none;
+    cursor: pointer;
 }
 
 .auth-nav {
     text-align: center;
-}
-
-.auth-nav {
     color: #0073cc;
 }

@@ -18,7 +18,8 @@
             </div>
             <form action="/search" class="search-form" method="get">
                 @csrf
-                <input type="search" class="search-form__input" name="keyword" placeholder="なにをお探しですか？">
+                <input type="hidden" name="is_mylist" value="{{ $isMyList }}">
+                <input type="search" class="search-form__input" name="keyword" placeholder="なにをお探しですか？" value="{{ old('keyword') }}">
             </form>
             <nav class="header-nav">
                 <ul class="header-nav__list">
@@ -39,19 +40,30 @@
         <div class="container">
             <nav class="container-nav">
                 <ul class="container-nav__list">
-                    <li class="container-nav__item"><a href="/">おすすめ</a></li>
-                    <li class="container-nav__item"><a href="/?tab=mylist">マイリスト</a></li>
+                    <li class="container-nav__item"><a href="/"  @class(['red' => !$isMyList])>おすすめ</a></li>
+                    <li class="container-nav__item"><a href="/?tab=mylist"  @class(['red' => $isMyList])>マイリスト</a></li>
                 </ul>
             </nav>
             <div class="container__list">
-                @foreach ($items as $item)
-                    <a class="container__item" href="/item/{{$item->id}}">
-                        <div class="container__item-img">
-                            <img src="{{ asset($item->item_image) }}" alt="">
-                        </div>
-                        <p class="container__item-name">{{ $item->item_name }}</p>
-                    </a>
-                @endforeach
+                @isset ($items)
+                    @foreach ($items as $item)
+                        <a class="container__item" href="/item/{{$item->id}}">
+                            <div class="container__item-img">
+                                <img src="{{ asset($item->item_image) }}" alt="">
+                            </div>
+                            @if (!$item->is_sold)
+                                <div class="container__item-name">
+                                    <label>{{ $item->item_name }}</label>
+                                </div>
+                            @else
+                                <div class="container__item-name is_sold">
+                                    <label>{{ $item->item_name }}</label>
+                                    <label>Sold</label>
+                                </div>
+                            @endif
+                        </a>
+                    @endforeach
+                @endisset
             </div>
         </div>
     </main>

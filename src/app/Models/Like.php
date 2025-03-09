@@ -14,6 +14,8 @@ class Like extends Model
         'item_id',
     ];
 
+    public $timestamps = false;
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -22,5 +24,24 @@ class Like extends Model
     public function item()
     {
         return $this->belongsTo(Item::class);
+    }
+
+    public function isLike($user_id, $item_id)
+    {
+        return (boolean)$this->where('user_id', $user_id)->where('item_id', $item_id)->first();
+    }
+
+    public function likeStore($user_id, $item_id) 
+    {
+        $this->user_id = $user_id;
+        $this->item_id = $item_id;
+        $this->save();
+
+        return;
+    }
+
+    public function likeDestroy($like_id) 
+    {
+        return $this->where('id', $like_id)->delete();
     }
 }
