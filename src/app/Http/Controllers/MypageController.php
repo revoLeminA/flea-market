@@ -13,6 +13,7 @@ class MypageController extends Controller
     public function mypage(Request $request)
     {
         $user = Auth::user();
+
         $isSellItem = FALSE;
         $isBuyItem = FALSE;
         if ($request->tab == 'sell') {
@@ -28,8 +29,10 @@ class MypageController extends Controller
             $isBuyItem = TRUE;
         }
         else {
-            dd('error');
+            // dd('error');
+            // 赤いバーとかでエラー表示させる
         }
+        
         return view('mypage', compact('user','items', 'isSellItem', 'isBuyItem'));
     }
 }

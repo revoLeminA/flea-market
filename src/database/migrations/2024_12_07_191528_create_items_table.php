@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('item_name');
             $table->text('description');
             $table->integer('price');
-            $table->tinyInteger('brand_name')->nullable();
+            $table->string('brand_name')->nullable();
             $table->tinyInteger('status');
             $table->string('item_image');
             $table->boolean('is_sold');

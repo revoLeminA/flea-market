@@ -25,7 +25,7 @@
                     <li class="header-nav__item">
                         <form class="form" action="/logout" method="post">
                             @csrf
-                            <button class="header-nav__button">ログアウト</button>
+                            <button class="header-nav__btn">ログアウト</button>
                         </form>
                     </li>
                     <li class="header-nav__item"><a href="/mypage?tab=sell">マイページ</a></li>
@@ -43,7 +43,7 @@
                         <img src="{{ asset($user->profile_image) }}">
                     @endisset
                     @empty($user->profile_image)
-                        <img alt="未設定" onerror="this.style.display='none'">
+                        <div class="profile-img__unset"></div>
                     @endempty
                 </div>
                 <div class="container-top__profile-name">

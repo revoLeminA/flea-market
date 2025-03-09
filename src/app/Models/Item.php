@@ -25,12 +25,12 @@ class Item extends Model
         return $this->belongsTo(Like::class);
     }
 
-    public function like()
+    public function likes()
     {
         return $this->hasMany(Like::class);
     }
 
-    public function comment()
+    public function comments()
     {
         return $this->hasMany(Comment::class);
     }
@@ -40,8 +40,28 @@ class Item extends Model
         return $this->hasOne(Purchase::class);
     }
 
-    public function category()
+    public function categories()
     {
-        return $this->hasMany(Category::class);
+        return $this->belongsToMany(Category::class, 'item_categories');
+    }
+
+    public function scopeKeywordSearch($query, $keyword)
+    {
+        if (!empty($keyword)) {
+            $query->where('item_name', 'like', '%' . $keyword . '%');
+        }
+    }
+
+    public function itemStore($user_id, $data, $dir, $file_name)
+    {
+        $this->user_id = $user_id;
+        $this->item_name = $data['item_name'];
+        $this->description = $data['description'];
+        $this->price = $data['price'];
+        $this->brand_name = $data['brand_name'];
+        $this->status = $data['status'];
+        $this->item_image = 'storage/' . $dir . '/' . $file_name;
+        $this->is_sold = FALSE;
+        $this->save();
     }
 }

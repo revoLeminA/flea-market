@@ -45,63 +45,108 @@
             <div class="container-right">
                 <div class="item-name">{{ $item->item_name }}</div>
                 <div class="brand-name">{{ $item->brand_name }}</div>
-                <div class="price">￥{{ $item->item_name }}（税込み）</div>
+                <div class="price">￥<span>{{ number_format($item->price) }}</span>（税込）</div>
                 <div class="like-comment">
-                    <div class="like"></div>
-                    <div class="comment"></div>
+                    <div class="like">
+                        @if (!$is_like)
+                            <form action="/item/{{$item->id}}/like/store" class="store-like__form" method="post">
+                                @csrf
+                                <input type="hidden" name="item_id" value="{{ $item->id }}">
+                                <button class="like-submit__btn" type="submit">
+                                    <img src="{{ asset('images/star.svg') }}" alt="">
+                                </button>
+                                <p>{{ count($likes) }}</p>
+                            </form>
+                        @else
+                            <form action="/item/{{$item->id}}/like/destroy" class="destroy-like__form" method="post">
+                                @csrf
+                                <button class="like-submit__btn" type="submit">
+                                    <img src="{{ asset('images/star-fill.svg') }}" alt="">
+                                </button>
+                                <p>{{ count($likes) }}</p>
+                            </form>
+                        @endif
+                    </div>
+                    <div class="comment">
+                        @if (!$is_comment)
+                            <img src="{{ asset('images/comment.svg') }}" alt="">
+                        @else
+                            <img class="fill" src="{{ asset('images/comment-fill.svg') }}" alt="">
+                        @endif
+                        <p>{{ count($commentUsers) }}</p>
+                    </div>
                 </div>
                 <div class="nav-purchase">
-                    <a href="/purchase/{{$item->id}}"></a>
+                    <a href="/purchase/{{$item->id}}">購入手続きはこちらへ</a>
                 </div>
                 <div class="description">
-                    <lable class="description-ttl">商品説明</lable>
-                    {{ $item->description }}
+                    <label class="description__ttl">商品説明</label>
+                    <p>{!! nl2br(htmlspecialchars($item->description)) !!}</p>
                 </div>
                 <div class="item-data">
-                    <div class="item-data__category"></div>
-                    <div class="item-data__status"></div>
+                    <label class="item-data__ttl">商品情報</label>
+                    <div class="item-data__sub-item">
+                        <label class="sub-item__ttl">カテゴリー</label>
+                        @foreach ($categoryNames as $categoryName)
+                            <label class="sub-item__data category">
+                                {{ $categoryName }}
+                            </label>
+                        @endforeach
+                    </div>
+                    <div class="item-data__sub-item">
+                        <label class="sub-item__ttl">商品の状態</label>
+                        @if ($item->status === 1)
+                            <label class="sub-item__data">良好</label>
+                        @elseif ($item->status === 2)
+                            <label class="sub-item__data">目立った傷や汚れなし</label>
+                        @elseif ($item->status === 3)
+                            <label class="sub-item__data">やや傷や汚れあり</label>
+                        @elseif ($item->status === 4)
+                            <label class="sub-item__data">状態が悪い</label>
+                        @else
+                            <label class="sub-item__data">その他</label>
+                        @endif
+                    </div>
                 </div>
-                <div class="comment"></div>
+                <div class="comment-data">
+                    <label class="comment-data__ttl">コメント({{ count($commentUsers) }})</label>
+                    @foreach ($commentUsers as $commentUser)
+                        <div class="comment-data-set">
+                            <div class="comment-data__profile" @class(['right' => isset($user) && ($commentUser['user_id'] = $user->id)])>
+                                <div class="comment-data__profile-img">
+                                    @isset($commentUser['profile_image'])
+                                        <img src="{{ asset($commentUser['profile_image']) }}">
+                                    @endisset
+                                    @empty($commentUser['profile_image'])
+                                        <div class="profile-img__unset"></div>
+                                    @endempty
+                                </div>
+                                <div class="comment-data__profile-name">
+                                    {{ $commentUser['user_name'] }}
+                                </div>
+                            </div>
+                            <div class="comment-data__content" @class(['right' => isset($user) && ($commentUser['user_id'] = $user->id)])>
+                                <label>{!! nl2br(htmlspecialchars($commentUser['content'])) !!}</label>
+                            </div>
+                        </div>
+                    @endforeach
+                    <form action="/item/{{$item->id}}/comment" class="comment-form" method="post">
+                        @csrf
+                        <label class="form-item__ttl">商品へのコメント</label>
+                        <textarea class="form-item__input" name="content" value="{{ old('content') }}"></textarea>
+                        <div class="form-item__error">
+                            @error('content')
+                                {{ $message }}
+                            @enderror
+                        </div>
+                        <div class="form__btn">
+                            <input type="hidden" name="item_id" value="{{ $item->id }}">
+                            <button class="form__btn-submit" type="submit">コメントを送信する</button>
+                        </div>
+                    </form>
+                </di>
             </div>
         </div>
     </main>
-
-<script>
-    // ファイル選択時にプレビュー画像を表示する処理
-    function previewFile(file) {
-        // プレビュー画像を追加する要素
-        const preview = document.getElementById('preview');
-        // プレビュー要素をクリア
-        preview.innerHTML = "";
-
-        // FileReaderオブジェクトを作成
-        const reader = new FileReader();
-
-        // ファイルが読み込まれたときに実行する
-        reader.onload = function (e) {
-            const imageUrl = e.target.result; // 画像のURLはevent.target.resultで呼び出せる
-            const img = document.createElement("img"); // img要素を作成
-            img.src = imageUrl; // 画像のURLをimg要素にセット
-            preview.appendChild(img); // #previewの中に追加
-        }
-
-        // いざファイルを読み込む
-        reader.readAsDataURL(file);
-    }
-
-    // <input>でファイルが選択されたときの処理
-    const fileInput = document.getElementById('item_img');
-    // changeイベントで呼び出す関数
-    const handleFileSelect = () => {
-        const files = fileInput.files;
-        for (let i = 0; i < files.length; i++) {
-            previewFile(files[i]); // 1つ1つのファイルデータはfiles[i]で取得できる
-        }
-    }
-
-    // ファイル選択時にhandleFileSelectを発火
-    fileInput.addEventListener('change', handleFileSelect);
-</script>
-
 </body>
 </html>

@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Request;
 
 class ItemRequest extends FormRequest
 {
@@ -39,7 +38,7 @@ class ItemRequest extends FormRequest
         return [
             'item_name.required' => ':attributeを入力して下さい',
             'description.required' => ':attributeを入力して下さい',
-            'description.max' => ':attributeは:max文字以上で入力してください',
+            'description.max' => ':attributeは:max文字以内で入力してください',
             'item_image.required' => ':attributeを入力して下さい',
             'item_image.mimes' => ':attributeには、:valuesタイプのファイルを入力してください',
             'item_image.mimetypes' => ':attributeには、:valuesタイプのファイルを指定してください',

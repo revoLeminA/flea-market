@@ -30,6 +30,7 @@
 }
 
 .header-nav__item a {
+    display: block;
     color: white;
 }
 
@@ -38,6 +39,7 @@
     background-color: black;
     color: white;
     border: none;
+    cursor: pointer;
 }
 
 .reversible {
@@ -49,6 +51,7 @@
 }
 
 .reversible a {
+    display: block;
     color: black;
 }
 

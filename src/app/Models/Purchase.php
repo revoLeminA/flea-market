@@ -18,7 +18,7 @@ class Purchase extends Model
         'payment_method',
     ];
 
-    public function user()
+    public function users()
     {
         return $this->belongsToMany(User::class);
     }

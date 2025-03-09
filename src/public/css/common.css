@@ -8,6 +8,10 @@ a {
     padding: 10px 20px;
 }
 
-.header__ttl img {
+.header-inner .header__ttl img {
     width: 220px;
+}
+
+.form-item__error {
+    color: red;
 }

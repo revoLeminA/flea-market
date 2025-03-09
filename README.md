@@ -12,8 +12,9 @@
 2. composer install
 3. .env.exampleファイルから.envを作成し、環境変数を構築
 4. php artisan key:generate
-5. php artisan migrate
-6. php artisan db:seed
+5. 会員登録で任意のユーザを追加
+6. php artisan migrate
+7. php artisan db:seed(ユーザを追加しないとuser_idが存在しないエラーになります)
 
 ## 使用技術
 - PHP 8.2.0
