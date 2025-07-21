@@ -27,7 +27,7 @@ MAIL_FROM_ADDRESS=info@example.com
 ### C006～C010の商品データを出品したユーザ
 - メールアドレス；amazon@coachtech.com
 - パスワード：password
-### C001～C005の商品データを出品したユーザ
+### 何も紐づけられていないユーザ
 - メールアドレス；rakuten@coachtech.com
 - パスワード：password
 
