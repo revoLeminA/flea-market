@@ -15,10 +15,10 @@
 MAIL_HOST=mail
 MAIL_FROM_ADDRESS=info@example.com
 ````
-5. php artisan key:generate
-6. php artisan migrate
-7. php artisan db:seed(ユーザを追加しないとuser_idが存在しないエラーになります)
-8. php artisan storage:link
+4. php artisan key:generate
+5. php artisan migrate
+6. php artisan db:seed
+7. php artisan storage:link
 
 ## ダミーデータ
 ### C001～C005の商品データを出品したユーザ
