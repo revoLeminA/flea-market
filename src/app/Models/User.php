@@ -6,11 +6,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, Billable;
 
     /**
      * The attributes that are mass assignable.
@@ -66,10 +67,48 @@ class User extends Authenticatable
         return $this->hasMany(Purchase::class);
     }
 
+    public function chatsAsBuyer()
+    {
+        return $this->hasMany(Chat::class, 'buyer_id');
+    }
+
+    public function chatsAsSeller()
+    {
+        return $this->hasMany(Chat::class, 'seller_id');
+    }
+
+    public function chatMessages()
+    {
+        return $this->hasMany(ChatMessage::class, 'sender_id');
+    }
+
+    public function chatNotifications()
+    {
+        return $this->hasMany(ChatNotification::class, 'receiver_id');
+    }
+
+    public function ratingsGiven()
+    {
+        return $this->hasMany(Rating::class, 'evaluator_id');
+    }
+
+    public function ratingsReceived()
+    {
+        return $this->hasMany(Rating::class, 'evaluated_id');
+    }
+
     public function profileUpload($data, $dir, $file_name)
     {
         $this->user_name = $data['user_name'];
         $this->profile_image = 'storage/' . $dir . '/' . $file_name;
+        $this->postal_code = $data['postal_code'];
+        $this->address = $data['address'];
+        $this->building = $data['building'];
+        $this->save();
+    }
+
+    public function addressUpload($data)
+    {
         $this->postal_code = $data['postal_code'];
         $this->address = $data['address'];
         $this->building = $data['building'];

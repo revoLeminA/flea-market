@@ -78,6 +78,7 @@
                 </div>
                 <div class="nav-purchase">
                     <a href="/purchase/{{$item->id}}">購入手続きはこちらへ</a>
+                    <a href="/chat/{{$item->id}}">取引チャットはこちらへ</a>
                 </div>
                 <div class="description">
                     <label class="description__ttl">商品説明</label>
@@ -112,7 +113,7 @@
                     <label class="comment-data__ttl">コメント({{ count($commentUsers) }})</label>
                     @foreach ($commentUsers as $commentUser)
                         <div class="comment-data-set">
-                            <div class="comment-data__profile" @class(['right' => isset($user) && ($commentUser['user_id'] = $user->id)])>
+                            <div class="comment-data__profile {{ $isMyCommentList[$commentUser['user_id']] ? 'right' : '' }}">
                                 <div class="comment-data__profile-img">
                                     @isset($commentUser['profile_image'])
                                         <img src="{{ asset($commentUser['profile_image']) }}">
@@ -125,7 +126,7 @@
                                     {{ $commentUser['user_name'] }}
                                 </div>
                             </div>
-                            <div class="comment-data__content" @class(['right' => isset($user) && ($commentUser['user_id'] = $user->id)])>
+                            <div class="comment-data__content {{ $isMyCommentList[$commentUser['user_id']] ? 'right' : '' }}">
                                 <label>{!! nl2br(htmlspecialchars($commentUser['content'])) !!}</label>
                             </div>
                         </div>

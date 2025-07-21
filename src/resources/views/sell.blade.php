@@ -75,7 +75,7 @@
                     <div class="form-item__select">
                         <lael class="form-item__select-msg">選択肢を選んでください</lael>
                         <div class="form-item__options">
-                            <label class="form-item__option"><input type="radio" class="form-item__option-input" name="brand_name" value="Panasoni">Panasonic</label>
+                            <label class="form-item__option"><input type="radio" class="form-item__option-input" name="brand_name" value="Panasonic">Panasonic</label>
                             <label class="form-item__option"><input type="radio" class="form-item__option-input" name="brand_name" value="Shiseido">Shiseido</label>
                             <label class="form-item__option"><input type="radio" class="form-item__option-input" name="brand_name" value="Elecom">Elecom</label>
                             <label class="form-item__option"><input type="radio" class="form-item__option-input" name="brand_name" value="JA">JA</label>
@@ -149,78 +149,78 @@
         </div>
     </main>
 
-<script>
-    /*========================================
-    画像のプレビュー表示
-    ========================================*/
-    // <input>でファイルが選択されたときの処理
-    const fileInput = document.getElementById('item_img');
-    // ファイル選択時に呼び出す関数
-    fileInput.addEventListener('change', () => {
-        const files = fileInput.files;
-        if (0 < files.length) {
-            previewFile(files[0]);
-        }
-    });
-    // ファイル選択時にプレビュー画像を表示する処理
-    function previewFile(file) {
-        // プレビュー画像を追加する要素
-        const preview = document.getElementById('preview');
-        // プレビュー画像がすでにある場合は削除（innerHTMLを使わない）
-        const existingImg = preview.querySelector('img');
-        if (existingImg) {
-            existingImg.remove();
-        }
-        // FileReaderオブジェクトを作成
-        const reader = new FileReader();
-        // ファイルが読み込まれたときに実行する
-        reader.onload = function (e) {
-            const imageUrl = e.target.result; // 画像のURLはevent.target.resultで呼び出せる
-            const img = document.createElement("img"); // img要素を作成
-            img.src = imageUrl; // 画像のURLをimg要素にセット
-            preview.appendChild(img); // #previewの中に追加
-            // preview.style.border = 'none'; // 画像が表示されたらborderを消す
-            // 画像をクリックすると再度ファイル選択ダイアログを開く
-            img.addEventListener('click', () => {
-                fileInput.click();
-            });
-        }
-        // いざファイルを読み込む
-        reader.readAsDataURL(file);
-    }
-
-    /*========================================
-    セレクトボックスの開閉動作
-    ========================================*/
-    const selects = document.querySelectorAll('.form-item__select');
-    // 各セレクトボックスごとの処理
-    selects.forEach(select => {
-        const dropdown = select.querySelector('.form-item__options');
-        const options = dropdown.querySelectorAll('.form-item__option');
-        // セレクトボックスをクリックすると開く
-        select.addEventListener('click', () => {
-            select.classList.add('open');
-        });
-        // 各オプションごとの処理
-        options.forEach(option => {
-            const input = option.querySelector('.form-item__option-input');
-            // オプション選択時の処理
-            option.addEventListener('click', (e) => {
-                const displayMessage = select.querySelector('.form-item__select-msg');
-                e.stopPropagation(); // クリックイベントが親要素に伝播しないようにする
-                displayMessage.textContent = option.textContent; // 選択された値を表示
-                console.log(`選択された値: ${input.value}`); // 選択された値を取得
-                select.classList.remove('open'); // ドロップダウンを閉じる
-            });
-        });
-        // ページ外クリックでドロップダウンを閉じる
-        document.addEventListener('click', (e) => {
-            if (!select.contains(e.target)) {
-                select.classList.remove('open');
+    <script>
+        /*========================================
+        画像のプレビュー表示
+        ========================================*/
+        // <input>でファイルが選択されたときの処理
+        const fileInput = document.getElementById('item_img');
+        // ファイル選択時に呼び出す関数
+        fileInput.addEventListener('change', () => {
+            const files = fileInput.files;
+            if (0 < files.length) {
+                previewFile(files[0]);
             }
         });
-    });
-</script>
+        // ファイル選択時にプレビュー画像を表示する処理
+        function previewFile(file) {
+            // プレビュー画像を追加する要素
+            const preview = document.getElementById('preview');
+            // プレビュー画像がすでにある場合は削除（innerHTMLを使わない）
+            const existingImg = preview.querySelector('img');
+            if (existingImg) {
+                existingImg.remove();
+            }
+            // FileReaderオブジェクトを作成
+            const reader = new FileReader();
+            // ファイルが読み込まれたときに実行する
+            reader.onload = function (e) {
+                const imageUrl = e.target.result; // 画像のURLはevent.target.resultで呼び出せる
+                const img = document.createElement("img"); // img要素を作成
+                img.src = imageUrl; // 画像のURLをimg要素にセット
+                preview.appendChild(img); // #previewの中に追加
+                // preview.style.border = 'none'; // 画像が表示されたらborderを消す
+                // 画像をクリックすると再度ファイル選択ダイアログを開く
+                img.addEventListener('click', () => {
+                    fileInput.click();
+                });
+            }
+            // いざファイルを読み込む
+            reader.readAsDataURL(file);
+        }
+
+        /*========================================
+        セレクトボックスの開閉動作
+        ========================================*/
+        const selects = document.querySelectorAll('.form-item__select');
+        // 各セレクトボックスごとの処理
+        selects.forEach(select => {
+            const dropdown = select.querySelector('.form-item__options');
+            const options = dropdown.querySelectorAll('.form-item__option');
+            // セレクトボックスをクリックすると開く
+            select.addEventListener('click', () => {
+                select.classList.add('open');
+            });
+            // 各オプションごとの処理
+            options.forEach(option => {
+                const input = option.querySelector('.form-item__option-input');
+                // オプション選択時の処理
+                option.addEventListener('click', (e) => {
+                    const displayMessage = select.querySelector('.form-item__select-msg');
+                    e.stopPropagation(); // クリックイベントが親要素に伝播しないようにする
+                    displayMessage.textContent = option.textContent; // 選択された値を表示
+                    console.log(`選択された値: ${input.value}`); // 選択された値を取得
+                    select.classList.remove('open'); // ドロップダウンを閉じる
+                });
+            });
+            // ページ外クリックでドロップダウンを閉じる
+            document.addEventListener('click', (e) => {
+                if (!select.contains(e.target)) {
+                    select.classList.remove('open');
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>

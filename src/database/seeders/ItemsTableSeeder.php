@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Item;
+use Illuminate\Support\Facades\DB;
+use Faker\Provider\DateTime;
 
 class ItemsTableSeeder extends Seeder
 {
@@ -15,7 +15,7 @@ class ItemsTableSeeder extends Seeder
      */
     public function run()
     {
-        Item::create([
+        DB::table('items')->insert([
             "id" => 1,
             "user_id" => 1,
             'item_name' => '腕時計',
@@ -25,9 +25,11 @@ class ItemsTableSeeder extends Seeder
             'status' => 1,
             'brand_name' => 'Rolex',
             'is_sold' => 0,
+            'created_at' => DateTime::dateTimeThisDecade(),
+            'updated_at' => now(),
         ]);
 
-        Item::create([
+        DB::table('items')->insert([
             "id" => 2,
             "user_id" => 1,
             'item_name' => 'HDD',
@@ -37,9 +39,11 @@ class ItemsTableSeeder extends Seeder
             'status' => 2,
             'brand_name' => 'Elecom',
             'is_sold' => 0,
+            'created_at' => DateTime::dateTimeThisDecade(),
+            'updated_at' => now(),
         ]);
 
-        Item::create([
+        DB::table('items')->insert([
             "id" => 3,
             "user_id" => 1,
             'item_name' => '玉ねぎ3束',
@@ -49,9 +53,11 @@ class ItemsTableSeeder extends Seeder
             'status' => 3,
             'brand_name' => 'JA',
             'is_sold' => 0,
+            'created_at' => DateTime::dateTimeThisDecade(),
+            'updated_at' => now(),
         ]);
 
-        Item::create([
+        DB::table('items')->insert([
             "id" => 4,
             "user_id" => 1,
             'item_name' => '革靴',
@@ -61,9 +67,11 @@ class ItemsTableSeeder extends Seeder
             'status' => 4,
             'brand_name' => 'Rolex',
             'is_sold' => 0,
+            'created_at' => DateTime::dateTimeThisDecade(),
+            'updated_at' => now(),
         ]);
 
-        Item::create([
+        DB::table('items')->insert([
             "id" => 5,
             "user_id" => 1,
             'item_name' => 'ノートPC',
@@ -72,12 +80,14 @@ class ItemsTableSeeder extends Seeder
             'item_image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Living+Room+Laptop.jpg',
             'status' => 1,
             'brand_name' => 'Panasonic',
-            'is_sold' => 0,
+            'is_sold' => 1,
+            'created_at' => DateTime::dateTimeThisDecade(),
+            'updated_at' => now(),
         ]);
 
-        Item::create([
+        DB::table('items')->insert([
             "id" => 6,
-            "user_id" => 1,
+            "user_id" => 2,
             'item_name' => 'マイク',
             'price' => 8000,
             'description' => '高音質のレコーディング用マイク',
@@ -85,23 +95,27 @@ class ItemsTableSeeder extends Seeder
             'status' => 2,
             'brand_name' => 'Elecom',
             'is_sold' => 0,
+            'created_at' => DateTime::dateTimeThisDecade(),
+            'updated_at' => now(),
         ]);
 
-        Item::create([
+        DB::table('items')->insert([
             "id" => 7,
-            "user_id" => 1,
+            "user_id" => 2,
             'item_name' => 'ショルダーバッグ',
             'price' => 3500,
             'description' => 'おしゃれなショルダーバッグ',
             'item_image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Purse+fashion+pocket.jpg',
             'status' => 3,
             'brand_name' => 'COACH',
-            'is_sold' => 0,
+            'is_sold' => 1,
+            'created_at' => DateTime::dateTimeThisDecade(),
+            'updated_at' => now(),
         ]);
 
-        Item::create([
+        DB::table('items')->insert([
             "id" => 8,
-            "user_id" => 1,
+            "user_id" => 2,
             'item_name' => 'タンブラー',
             'price' => 500,
             'description' => '使いやすいタンブラー',
@@ -109,11 +123,13 @@ class ItemsTableSeeder extends Seeder
             'status' => 4,
             'brand_name' => 'THERMOS',
             'is_sold' => 0,
+            'created_at' => DateTime::dateTimeThisDecade(),
+            'updated_at' => now(),
         ]);
 
-        Item::create([
+        DB::table('items')->insert([
             "id" => 9,
-            "user_id" => 1,
+            "user_id" => 2,
             'item_name' => 'コーヒーミル',
             'price' => 4000,
             'description' => '手動のコーヒーミル',
@@ -121,11 +137,13 @@ class ItemsTableSeeder extends Seeder
             'status' => 1,
             'brand_name' => 'DeLonghi',
             'is_sold' => 0,
+            'created_at' => DateTime::dateTimeThisDecade(),
+            'updated_at' => now(),
         ]);
 
-        Item::create([
+        DB::table('items')->insert([
             "id" => 10,
-            "user_id" => 1,
+            "user_id" => 2,
             'item_name' => 'メイクセット',
             'price' => 2500,
             'description' => '便利なメイクアップセット',
@@ -133,6 +151,8 @@ class ItemsTableSeeder extends Seeder
             'status' => 2,
             'brand_name' => 'Shiseido',
             'is_sold' => 0,
+            'created_at' => DateTime::dateTimeThisDecade(),
+            'updated_at' => now(),
         ]);
     }
 }

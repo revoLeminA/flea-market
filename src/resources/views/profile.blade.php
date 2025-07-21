@@ -92,55 +92,55 @@
         </div>
     </main>
 
-<script>
-    // ファイル選択時にプレビュー画像を表示する処理
-    function previewFile(file) {
-        // プレビュー画像を追加する要素
-        const preview = document.getElementById('preview');
-        // プレビュー要素をクリア
-        preview.innerHTML = "";
+    <script>
+        // ファイル選択時にプレビュー画像を表示する処理
+        function previewFile(file) {
+            // プレビュー画像を追加する要素
+            const preview = document.getElementById('preview');
+            // プレビュー要素をクリア
+            preview.innerHTML = "";
 
-        // FileReaderオブジェクトを作成
-        const reader = new FileReader();
+            // FileReaderオブジェクトを作成
+            const reader = new FileReader();
 
-        // ファイルが読み込まれたときに実行する
-        reader.onload = function (e) {
-            const imageUrl = e.target.result; // 画像のURLはevent.target.resultで呼び出せる
-            const img = document.createElement("img"); // img要素を作成
-            img.src = imageUrl; // 画像のURLをimg要素にセット
-            preview.appendChild(img); // #previewの中に追加
+            // ファイルが読み込まれたときに実行する
+            reader.onload = function (e) {
+                const imageUrl = e.target.result; // 画像のURLはevent.target.resultで呼び出せる
+                const img = document.createElement("img"); // img要素を作成
+                img.src = imageUrl; // 画像のURLをimg要素にセット
+                preview.appendChild(img); // #previewの中に追加
+            }
+
+            // いざファイルを読み込む
+            reader.readAsDataURL(file);
         }
 
-        // いざファイルを読み込む
-        reader.readAsDataURL(file);
-    }
+        // ファイル未選択時にDBに登録されているプレビュー画像を表示する処理
+        function displayDefaultImage() {
+            const preview = document.getElementById('preview');
+            // プレビュー要素をクリア
+            preview.innerHTML = "";
 
-    // ファイル未選択時にDBに登録されているプレビュー画像を表示する処理
-    function displayDefaultImage() {
-        const preview = document.getElementById('preview');
-        // プレビュー要素をクリア
-        preview.innerHTML = "";
-
-        const img = document.createElement("img");
-        img.src = "{{ asset($user->profile_image) }}"; // デフォルトの画像URL
-        preview.appendChild(img);
-    }
-
-    // <input>でファイルが選択されたときの処理
-    const fileInput = document.getElementById('profile_img');
-    // ファイル選択時に呼び出す関数
-    fileInput.addEventListener('change', () => {
-        const files = fileInput.files;
-        if (0 < files.length) {
-            previewFile(files[files.length-1]); // 1つ1つのファイルデータはfiles[i]で取得できる
+            const img = document.createElement("img");
+            img.src = "{{ asset($user->profile_image) }}"; // デフォルトの画像URL
+            preview.appendChild(img);
         }
-    });
 
-    // 初期表示としてデフォルト画像を表示
-    @isset($user->profile_image)
-        document.addEventListener('DOMContentLoaded', displayDefaultImage);
-    @endisset
-</script>
+        // <input>でファイルが選択されたときの処理
+        const fileInput = document.getElementById('profile_img');
+        // ファイル選択時に呼び出す関数
+        fileInput.addEventListener('change', () => {
+            const files = fileInput.files;
+            if (0 < files.length) {
+                previewFile(files[files.length-1]); // 1つ1つのファイルデータはfiles[i]で取得できる
+            }
+        });
+
+        // 初期表示としてデフォルト画像を表示
+        @isset($user->profile_image)
+            document.addEventListener('DOMContentLoaded', displayDefaultImage);
+        @endisset
+    </script>
 
 </body>
 </html>

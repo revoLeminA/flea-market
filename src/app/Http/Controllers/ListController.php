@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
 use App\Models\Like;
 
@@ -14,7 +14,7 @@ class ListController extends Controller
     {
         $user = Auth::user();
 
-        // 認証ユーザかつプロフィール未設定
+        // 認証ユーザかつプロフィール未設定チェック
         if(isset($user) && is_null($user->address)){
             return redirect('/mypage/profile');
         }
@@ -24,17 +24,29 @@ class ListController extends Controller
     }
 
     // 商品リスト一覧画面
-    public function list(Request $request)
+    public function list(Request $request, Item $items)
     {
         $user = Auth::user();
         $isMyList = FALSE;
 
         // 認証ユーザ
         if (isset($user)) {
-            $items = Item::where('user_id', '!=', $user->id)->get(); // 自分が出品した商品は表示しない
+            // 検索条件を保持
+            if (isset($request->keyword) && $request->keyword !== '') {
+                $items = Item::where('user_id', '!=', $user->id)->KeywordSearch($request->keyword)->get(); // 自分が出品した商品は表示しない
+            }
+            else {
+                $items = Item::where('user_id', '!=', $user->id)->get(); // 自分が出品した商品は表示しない
+            }
             // マイリスト（ユーザがいいねした商品のみ表示）
             if ($request->tab == 'mylist') {
-                $likes = Like::where('user_id', $user->id)->get();
+                $likes = [];
+                foreach ($items as $item) {
+                    if (Like::where('item_id', $item->id)->where('user_id', $user->id)->exists()) {
+                        // ユーザがいいねした商品を取得
+                        $likes[] = Like::where('item_id', $item->id)->where('user_id', $user->id)->first();
+                    }
+                }
                 $itemsMyList = array();
                 foreach ($likes as $like) {
                     array_push($itemsMyList, $items->where('id', $like->item_id)->first());

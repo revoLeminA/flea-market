@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('shipping_address');
             $table->string('shipping_building')->nullable();
             $table->tinyInteger('payment_method');
-            $table->timestamp('created_at')->useCurrent()->nullable();
+            $table->timestamps();
         });
     }
 

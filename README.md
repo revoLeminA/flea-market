@@ -10,11 +10,21 @@
 ### Laravel環境構築
 1. docker-compose exec php bash
 2. composer install
-3. .env.exampleファイルから.envを作成し、環境変数を構築
+3. .env.exampleファイルから.envを作成し、環境変数を構築（MAILは以下を参照）
 4. php artisan key:generate
-5. 会員登録で任意のユーザを追加
-6. php artisan migrate
-7. php artisan db:seed(ユーザを追加しないとuser_idが存在しないエラーになります)
+5. php artisan migrate
+6. php artisan db:seed
+
+## ダミーデータ
+### C001～C005の商品データを出品したユーザ
+- メールアドレス：mercari@coachtech.com
+- パスワード：password
+### C006～C010の商品データを出品したユーザ
+- メールアドレス：amazon@coachtech.com
+- パスワード：password
+### 何も紐づけられていないユーザデータ
+- メールアドレス：rakuten@coachtech.com
+- パスワード：password
 
 ## 使用技術
 - PHP 8.2.0

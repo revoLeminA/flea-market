@@ -7,7 +7,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SellController;
-
+use App\Http\Controllers\AddressController;
+use App\Http\Controllers\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +34,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/item/{item_id}/comment', [ItemController::class, 'comment']);
     Route::post('/item/{item_id}/like/store', [ItemController::class, 'storeLike']);
     Route::post('/item/{item_id}/like/destroy', [ItemController::class, 'destroyLike']);
-    // Route::get('/purchase/address/{item_id}', [PurchaseController::class, 'address']);
-    // Route::get('/purchase/{item_id}', [PurchaseController::class, 'purchase']);
+    Route::get('/purchase/{item_id}', [PurchaseController::class, 'purchase'])->name('purchase.create');
+    Route::post('/purchase/{item_id}/create', [PurchaseController::class, 'create']);
+    Route::get('/purchase/address/{item_id}', [AddressController::class, 'address']);
+    Route::post('/purchase/address/{item_id}/upload', [AddressController::class, 'upload']);
+    Route::get('/chat/{item_id}', [ChatController::class, 'index']);
+    Route::post('/chat/{item_id}/create', [ChatController::class, 'create']);
+    Route::post('/chat/{item_id}/update', [ChatController::class, 'update']);
+    Route::post('/chat/{item_id}/delete', [ChatController::class, 'delete']);
+    Route::post('/chat/{item_id}/complete', [ChatController::class, 'complete']);
 });
 

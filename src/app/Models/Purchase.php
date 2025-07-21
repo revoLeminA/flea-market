@@ -20,11 +20,22 @@ class Purchase extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(User::class);
     }
 
-    public function item()
+    public function items()
     {
         return $this->belongsTo(Item::class);
+    }
+
+    public function purchaseStore($user_id, $item_id, $data)
+    {
+        $this->user_id = $user_id;
+        $this->item_id = $item_id;
+        $this->shipping_postal_code = $data['shipping_postal_code'];
+        $this->shipping_address = $data['shipping_address'];
+        $this->shipping_building = $data['shipping_building'];
+        $this->payment_method = $data['payment_method'];
+        $this->save();
     }
 }

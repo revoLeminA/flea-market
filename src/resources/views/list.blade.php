@@ -19,7 +19,7 @@
             <form action="/search" class="search-form" method="get">
                 @csrf
                 <input type="hidden" name="is_mylist" value="{{ $isMyList }}">
-                <input type="search" class="search-form__input" name="keyword" placeholder="なにをお探しですか？" value="{{ old('keyword') }}">
+                <input type="search" class="search-form__input" name="keyword" placeholder="なにをお探しですか？" value="{{ old('keyword') ?? request()->keyword }}">
             </form>
             <nav class="header-nav">
                 <ul class="header-nav__list">
@@ -40,8 +40,13 @@
         <div class="container">
             <nav class="container-nav">
                 <ul class="container-nav__list">
-                    <li class="container-nav__item"><a href="/"  @class(['red' => !$isMyList])>おすすめ</a></li>
-                    <li class="container-nav__item"><a href="/?tab=mylist"  @class(['red' => $isMyList])>マイリスト</a></li>
+                    @if (isset(request()->keyword) && request()->keyword !== '')
+                        <li class="container-nav__item"><a href="/?keyword={{request()->keyword}}"  @class(['red' => !$isMyList])>おすすめ</a></li>
+                        <li class="container-nav__item"><a href="/?tab=mylist&keyword={{request()->keyword}}"  @class(['red' => $isMyList])>マイリスト</a></li>
+                    @else
+                        <li class="container-nav__item"><a href="/"  @class(['red' => !$isMyList])>おすすめ</a></li>
+                        <li class="container-nav__item"><a href="/?tab=mylist"  @class(['red' => $isMyList])>マイリスト</a></li>
+                    @endif
                 </ul>
             </nav>
             <div class="container__list">
@@ -58,7 +63,7 @@
                             @else
                                 <div class="container__item-name is_sold">
                                     <label>{{ $item->item_name }}</label>
-                                    <label>Sold</label>
+                                    <label class="sold-label">Sold</label>
                                 </div>
                             @endif
                         </a>

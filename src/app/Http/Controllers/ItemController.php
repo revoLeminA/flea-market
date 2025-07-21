@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CommentRequest;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
 use App\Models\Category;
 use App\Models\User;
@@ -18,9 +18,9 @@ class ItemController extends Controller
     {
         $user = Auth::user();
         $item = Item::where('id', $item_id)->first();
-        $likes = Like::all();
+        $likes = Like::where('item_id', $item_id)->get();
         $is_like = FALSE;
-        $comments = Comment::all();
+        $comments = Comment::where('item_id', $item_id)->get();
         $commentUsers = array();
         $is_comment = FALSE;
 
@@ -45,8 +45,12 @@ class ItemController extends Controller
                 array_push($commentUsers, array_merge(json_decode(json_encode($comment), true), json_decode(json_encode(User::where('id', $comment->user_id)->first()), true)));
             }
         }
+        $isMyCommentList = [];
+        foreach ($commentUsers as $commentUser) {
+            $isMyCommentList[$commentUser['user_id']] = $commentUser['user_id'] == $user->id;
+        }
 
-        return view('item', compact('user', 'item', 'categoryNames', 'likes', 'is_like', 'commentUsers', 'is_comment'));
+        return view('item', compact('user', 'item', 'categoryNames', 'likes', 'is_like', 'commentUsers', 'is_comment', 'isMyCommentList'));
     }
 
     // コメント機能
@@ -61,7 +65,7 @@ class ItemController extends Controller
     }
 
     // いいね追加機能
-    public function storeLike(Request $request, Like $like) 
+    public function storeLike(Request $request, Like $like)
     {
         $user = Auth::user();
         $item_id = $request->item_id;
@@ -76,7 +80,7 @@ class ItemController extends Controller
     }
 
     // いいね削除機能
-    public function destroyLike() 
+    public function destroyLike()
     {
         $user = Auth::user();
         $like = Like::where('user_id', $user->id)->first();

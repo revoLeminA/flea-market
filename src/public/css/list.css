@@ -104,10 +104,19 @@
 }
 
 .container__item-name {
-    margin-top: 5px;
+    margin-top: 3px;
+    margin-bottom: 10px;
 }
 
 .is_sold {
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+}
+
+.sold-label {
+    margin-left: 10px;
+    width: 50px;
+    color: white;
+    background-color: #ff5555;
+    text-align: center;
 }

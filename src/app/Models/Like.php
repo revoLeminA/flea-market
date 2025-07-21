@@ -31,7 +31,7 @@ class Like extends Model
         return (boolean)$this->where('user_id', $user_id)->where('item_id', $item_id)->first();
     }
 
-    public function likeStore($user_id, $item_id) 
+    public function likeStore($user_id, $item_id)
     {
         $this->user_id = $user_id;
         $this->item_id = $item_id;
@@ -40,7 +40,7 @@ class Like extends Model
         return;
     }
 
-    public function likeDestroy($like_id) 
+    public function likeDestroy($like_id)
     {
         return $this->where('id', $like_id)->delete();
     }

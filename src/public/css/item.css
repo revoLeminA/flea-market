@@ -139,9 +139,13 @@
     text-align: center;
     width: 90%;
     padding: 5px;
-    background-color: red;
+    background-color: #ff5555;
     color: white;
     font-weight: bold;
+}
+
+.container-right .nav-purchase a:first-of-type {
+    margin-bottom: 20px;
 }
 
 /* 商品説明 */
@@ -200,10 +204,10 @@
 }
 
 /* コメント履歴 */
-.container-right .comment-data .comment-data-set .right{
+.container-right .comment-data .comment-data-set .right {
     display: flex;
     justify-content: flex-end;
-    margin: 10px 0 10px auto;
+    margin: 10px 0 10px auto; /* 右寄せ */
 }
 
 .container-right .comment-data .comment-data__profile {
