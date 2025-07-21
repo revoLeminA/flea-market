@@ -11,9 +11,10 @@
 1. docker-compose exec php bash
 2. composer install
 3. .env.exampleファイルから.envを作成し、環境変数を構築（MAILは以下のように修正）
-''''
+````
 MAIL_HOST=mail
 MAIL_FROM_ADDRESS=info@example.com
+````
 5. php artisan key:generate
 6. php artisan migrate
 7. php artisan db:seed(ユーザを追加しないとuser_idが存在しないエラーになります)
