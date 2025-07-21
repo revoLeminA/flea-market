@@ -23,8 +23,7 @@ return new class extends Migration
             $table->tinyInteger('status');
             $table->string('item_image');
             $table->boolean('is_sold');
-            $table->timestamp('created_at')->useCurrent()->nullable();
-            $table->timestamp('updated_at')->useCurrent()->nullable();
+            $table->timestamps();
         });
     }
 

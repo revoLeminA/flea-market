@@ -10,7 +10,7 @@
 ### Laravel環境構築
 1. docker-compose exec php bash
 2. composer install
-3. .env.exampleファイルから.envを作成し、環境変数を構築
+3. .env.exampleファイルから.envを作成し、環境変数を構築（MAILは以下を参照）
 4. php artisan key:generate
 5. フリマアプリの会員登録画面で任意のユーザを追加(http://localhost/register)
 6. php artisan migrate

@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\ItemRequest;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
 use App\Models\Item;
 
@@ -29,6 +28,8 @@ class SellController extends Controller
         $request->file('item_image')->storeAs('public/' . $dir, $file_name);
 
         $item_data->itemStore($user->id, $data, $dir, $file_name);
+
+        // 中間テーブルの同期
         Item::find($item_data->id)->categories()->sync($data['categories']);
 
         return redirect('/mypage?tab=sell');

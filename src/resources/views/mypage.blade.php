@@ -38,7 +38,7 @@
     <main>
         <div class="container">
             <div class="container-top__profile">
-                <div class="container-top__profile-img">
+                <div class="container-top__profile--img">
                     @isset($user->profile_image)
                         <img src="{{ asset($user->profile_image) }}">
                     @endisset
@@ -46,10 +46,19 @@
                         <div class="profile-img__unset"></div>
                     @endempty
                 </div>
-                <div class="container-top__profile-name">
-                    {{ $user->user_name }}
+                <div class="container-top__profile--name-rating">
+                    <div class="profile-name">{{ $user->user_name }}</div>
+                    <div class="rating">
+                        @foreach (range(1, 5) as $i)
+                            @if ($i <= $ratingScoreAverage)
+                                <img src="{{ asset('images/star_sharp_yellow.svg') }}" alt="">
+                            @else
+                                <img src="{{ asset('images/star_sharp_gray.svg') }}" alt="">
+                            @endif
+                        @endforeach
+                    </div>
                 </div>
-                <div class="container-top__profile-nav">
+                <div class="container-top__profile--nav">
                     <a href="/mypage/profile">プロフィールを編集</a>
                 </div>
             </div>
@@ -57,16 +66,24 @@
                 <ul class="container-nav__list">
                     <li class="container-nav__item"><a href="/mypage?tab=sell" @class(['red' => $isSellItem])>出品した商品</a></li>
                     <li class="container-nav__item"><a href="/mypage?tab=buy" @class(['red' => $isBuyItem])>購入した商品</a></li>
+                    <li class="container-nav__item"><a href="/mypage?tab=trade" @class(['red' => $isTradeItem])>取引中の商品 <label>{{count($chatNotificationCounts)}}</label></a></li>
                 </ul>
             </nav>
             <div class="container__list">
                 @foreach ($items as $item)
-                    <a class="container__item" href="/item/{{$item->id}}">
-                        <div class="container__item-img">
-                            <img src="{{ asset($item->item_image) }}" alt="">
-                        </div>
-                        <p class="container__item-name">{{ $item->item_name }}</p>
-                    </a>
+                    @if ($isTradeItem)
+                        <a class="container__item" href="/chat/{{$item->id}}">
+                    @else
+                        <a class="container__item" href="/item/{{$item->id}}">
+                    @endif
+                            <div class="container__item-img">
+                                <img src="{{ asset($item->item_image) }}" alt="">
+                                @if (isset($chatNotificationCounts[$item->id]) && $chatNotificationCounts[$item->id] > 0)
+                                    <label class="label__notification-count">{{ $chatNotificationCounts[$item->id] }}</label>
+                                @endif
+                            </div>
+                            <p class="container__item-name">{{ $item->item_name }}</p>
+                        </a>
                 @endforeach
             </div>
         </div>

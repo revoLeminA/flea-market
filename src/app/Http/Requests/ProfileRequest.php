@@ -25,7 +25,7 @@ class ProfileRequest extends FormRequest
     {
         return [
             'user_name' => 'required',
-            'profile_image' => 'required|mimes:jpg,png|mimetypes:image/jpeg,image/png',
+            'profile_image' => 'sometimes|mimes:jpg,png|mimetypes:image/jpeg,image/png',
             'postal_code' => 'required|regex:/\A\d{3}\-\d{4}\z/',
             'address' => 'required',
         ];
@@ -35,11 +35,10 @@ class ProfileRequest extends FormRequest
     {
         return [
             'user_name.required' => ':attributeを入力して下さい',
-            'profile_image.required' => ':attributeを入力して下さい',
             'profile_image.mimes' => ':attributeには、:valuesタイプのファイルを入力してください',
             'profile_image.mimetypes' => ':attributeには、:valuesタイプのファイルを指定してください',
             'postal_code.required' => ':attributeを入力して下さい',
-            'postal_code.regex' => ':attributeには、ハイフンありの8文字で入力してください。',
+            'postal_code.regex' => ':attributeには、ハイフンありの8文字で入力してください',
             'address.required' => ':attributeを入力して下さい',
         ];
     }

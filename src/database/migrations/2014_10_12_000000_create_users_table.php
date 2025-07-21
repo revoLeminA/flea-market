@@ -24,8 +24,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('building')->nullable();
             $table->rememberToken();
-            $table->timestamp('created_at')->useCurrent()->nullable();
-            $table->timestamp('updated_at')->useCurrent()->nullable();
+            $table->timestamps();
         });
     }
 

@@ -45,6 +45,16 @@ class Item extends Model
         return $this->belongsToMany(Category::class, 'item_categories');
     }
 
+    public function chats()
+    {
+        return $this->hasMany(Chat::class);
+    }
+
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+
     public function scopeKeywordSearch($query, $keyword)
     {
         if (!empty($keyword)) {

@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Category;
+use Illuminate\Support\Facades\DB;
+use Faker\Provider\DateTime;
 
 class CategoriesTableSeeder extends Seeder
 {
@@ -15,79 +15,109 @@ class CategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        Category::create([
+        DB::table('categories')->insert([
             "id" => 1,
-            "category_name" => 'ファッション'
+            "category_name" => 'ファッション',
+            'created_at' => DateTime::dateTimeThisDecade(),
+            'updated_at' => now(),
         ]);
 
-        Category::create([
+        DB::table('categories')->insert([
             "id" => 2,
-            "category_name" => '家電'
+            "category_name" => '家電',
+            'created_at' => DateTime::dateTimeThisDecade(),
+            'updated_at' => now(),
         ]);
 
-        Category::create([
+        DB::table('categories')->insert([
             "id" => 3,
-            "category_name" => 'インテリア'
+            "category_name" => 'インテリア',
+            'created_at' => DateTime::dateTimeThisDecade(),
+            'updated_at' => now(),
         ]);
 
-        Category::create([
+        DB::table('categories')->insert([
             "id" => 4,
-            "category_name" => 'レディース'
+            "category_name" => 'レディース',
+            'created_at' => DateTime::dateTimeThisDecade(),
+            'updated_at' => now(),
         ]);
 
-        Category::create([
+        DB::table('categories')->insert([
             "id" => 5,
-            "category_name" => 'メンズ'
+            "category_name" => 'メンズ',
+            'created_at' => DateTime::dateTimeThisDecade(),
+            'updated_at' => now(),
         ]);
 
-        Category::create([
+        DB::table('categories')->insert([
             "id" => 6,
-            "category_name" => 'コスメ'
+            "category_name" => 'コスメ',
+            'created_at' => DateTime::dateTimeThisDecade(),
+            'updated_at' => now(),
         ]);
 
-        Category::create([
+        DB::table('categories')->insert([
             "id" => 7,
-            "category_name" => '本'
+            "category_name" => '本',
+            'created_at' => DateTime::dateTimeThisDecade(),
+            'updated_at' => now(),
         ]);
 
-        Category::create([
+        DB::table('categories')->insert([
             "id" => 8,
-            "category_name" => 'ゲーム'
+            "category_name" => 'ゲーム',
+            'created_at' => DateTime::dateTimeThisDecade(),
+            'updated_at' => now(),
         ]);
 
-        Category::create([
+        DB::table('categories')->insert([
             "id" => 9,
-            "category_name" => 'スポーツ'
+            "category_name" => 'スポーツ',
+            'created_at' => DateTime::dateTimeThisDecade(),
+            'updated_at' => now(),
         ]);
 
-        Category::create([
+        DB::table('categories')->insert([
             "id" => 10,
-            "category_name" => 'キッチン'
+            "category_name" => 'キッチン',
+            'created_at' => DateTime::dateTimeThisDecade(),
+            'updated_at' => now(),
         ]);
 
-        Category::create([
+        DB::table('categories')->insert([
             "id" => 11,
-            "category_name" => 'ハンドメイド'
+            "category_name" => 'ハンドメイド',
+            'created_at' => DateTime::dateTimeThisDecade(),
+            'updated_at' => now(),
         ]);
 
-        Category::create([
+        DB::table('categories')->insert([
             "id" => 12,
-            "category_name" => 'アクセサリー'
+            "category_name" => 'アクセサリー',
+            'created_at' => DateTime::dateTimeThisDecade(),
+            'updated_at' => now(),
         ]);
 
-        Category::create([
+        DB::table('categories')->insert([
             "id" => 13,
-            "category_name" => 'おもちゃ'
+            "category_name" => 'おもちゃ',
+            'created_at' => DateTime::dateTimeThisDecade(),
+            'updated_at' => now(),
         ]);
 
-        Category::create([
+        DB::table('categories')->insert([
             "id" => 14,
-            "category_name" => 'ベビー・キッズ'
+            "category_name" => 'ベビー・キッズ',
+            'created_at' => DateTime::dateTimeThisDecade(),
+            'updated_at' => now(),
         ]);
 
-        Category::create([
+        DB::table('categories')->insert([
             "id" => 15,
-            "category_name" => 'その他'
+            "category_name" => 'その他',
+            'created_at' => DateTime::dateTimeThisDecade(),
+            'updated_at' => now(),
         ]);
     }
 }

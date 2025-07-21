@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Http\Requests\ProfileRequest;
 
@@ -17,7 +16,7 @@ class ProfileController extends Controller
     }
 
     // プロフィール更新
-    public function upload(ProfileRequest $request)
+    public function upload(ProfileRequest $request, User $user)
     {
         $data = $request->all();
 
@@ -25,8 +24,8 @@ class ProfileController extends Controller
         $file_name = $request->file('profile_image')->getClientOriginalname();
         $request->file('profile_image')->storeAs('public/' . $dir, $file_name);
 
-        $profile_data = Auth::user();
-        $profile_data->profileUpload($data, $dir, $file_name);
+        $user = Auth::user();
+        $user->profileUpload($data, $dir, $file_name);
 
         return redirect('/mypage?tab=sell');
     }
