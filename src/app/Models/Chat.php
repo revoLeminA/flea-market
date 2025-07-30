@@ -40,4 +40,13 @@ class Chat extends Model
     {
         return $this->hasMany(ChatNotification::class);
     }
+
+    public function chatStore($buyerId, $sellerId, $itemId)
+    {
+        $this->buyer_id = $buyerId;
+        $this->seller_id = $sellerId;
+        $this->item_id = $itemId;
+        $this->is_completed = false;
+        $this->save();
+    }
 }

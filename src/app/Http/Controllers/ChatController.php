@@ -24,6 +24,16 @@ class ChatController extends Controller
                 $query->where('buyer_id', $chatter->id)->orWhere('seller_id', $chatter->id);
             })
             ->first();
+        if ($thisChat === null)
+        {
+            $sellerId = Item::where('id', $request->item_id)->first()->user_id;
+            $chatData->chatStore($chatter->id, $sellerId, $request->item_id);
+            $thisChat = Chat::where('item_id', $request->item_id)
+                ->where(function ($query) use ($chatter) {
+                    $query->where('buyer_id', $chatter->id)->orWhere('seller_id', $chatter->id);
+                })
+                ->first();
+        }
 
         $isBuyer = false;
         if ($chatter->id === $thisChat->buyer_id) {
@@ -37,7 +47,6 @@ class ChatController extends Controller
 
         $items = Item::join('chats', 'items.id', '=', 'chats.item_id')
             ->leftJoin('chat_messages', 'chats.id', '=', 'chat_messages.chat_id')
-            ->where('item_id', $thisChat->item_id)
             ->select('items.*')
             ->selectRaw('MAX(chat_messages.created_at) as latest_message_at')
             ->groupBy('items.id')
@@ -47,6 +56,7 @@ class ChatController extends Controller
 
         return view('chat', compact(
             'chatter',
+            'thisChat',
             'items',
             'thisItem',
             'partner',

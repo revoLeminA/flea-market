@@ -301,7 +301,7 @@
             /*========================================
             入力情報保持
             ========================================*/
-            const inputKey = 'chat_message_draft'; // 保存キー
+            const inputKey = 'chat_message_draft_{{ $thisChat->id ?? 'default' }}'; // 保存キー
             const inputField = document.getElementById('chatInput');
 
             // 入力内容を復元
