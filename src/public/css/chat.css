@@ -232,6 +232,10 @@ main {
     margin: 10px 0 10px auto; /* 右寄せ */
 }
 
+.main-container__chat .comment-data-set .comment-data__content img {
+    max-width: 100%;
+}
+
 .main-container__chat .comment-data-set .comment-data__control .form__btn-submit {
     color: #5f5f5f;
     background-color: transparent;

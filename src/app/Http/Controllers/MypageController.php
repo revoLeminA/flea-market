@@ -31,17 +31,18 @@ class MypageController extends Controller
 
         // 取引商品の新規通知数
         $chats = Chat::where('is_completed', '=', false)
-            ->where(function($query) use($user) {
+            ->where(function ($query) use ($user) {
                 $query->where('buyer_id', '=', $user->id)->orWhere('seller_id', '=', $user->id);
             })
             ->get();
         $chatItemIds = $chats->pluck('item_id');
         $chatNotificationCounts = [];
+        $chatNotificationCountSum = 0;
         if ($chats->isNotEmpty()) {
             foreach ($chats as $chat) {
-                if (ChatNotification::where('receiver_id', '=', $user->id)->where('chat_id', '=', $chat->id)->where('is_read', '=', false)->max('message_count') !== null)
-                {
+                if (ChatNotification::where('receiver_id', '=', $user->id)->where('chat_id', '=', $chat->id)->where('is_read', '=', false)->max('message_count') !== null) {
                     $chatNotificationCounts[$chat->item_id] = ChatNotification::where('receiver_id', '=', $user->id)->where('chat_id', '=', $chat->id)->where('is_read', '=', false)->max('message_count');
+                    $chatNotificationCountSum += $chatNotificationCounts[$chat->item_id];
                 }
             }
         }
@@ -54,15 +55,13 @@ class MypageController extends Controller
         if ($request->tab == 'sell') {
             $items = Item::where('user_id', '=', $user->id)->get();
             $isSellItem = TRUE;
-        }
-        elseif ($request->tab == 'buy') {
+        } elseif ($request->tab == 'buy') {
             $purchaseItemIds = Purchase::where('user_id', '=', $user->id)->get()->pluck('item_id');
             if ($purchaseItemIds->isNotEmpty()) {
                 $items = Item::whereIn('id', $purchaseItemIds)->get();
             }
             $isBuyItem = TRUE;
-        }
-        else if ($request->tab == 'trade') {
+        } else if ($request->tab == 'trade') {
             if ($chats->isNotEmpty()) {
                 $items = Item::join('chats', 'items.id', '=', 'chats.item_id')
                     ->leftJoin('chat_messages', 'chats.id', '=', 'chat_messages.chat_id')
@@ -77,6 +76,6 @@ class MypageController extends Controller
             $isTradeItem = TRUE;
         }
 
-        return view('mypage', compact('user', 'ratingScoreAverage', 'chatNotificationCounts', 'items', 'isSellItem', 'isBuyItem', 'isTradeItem'));
+        return view('mypage', compact('user', 'ratingScoreAverage', 'chatNotificationCounts', 'chatNotificationCountSum', 'items', 'isSellItem', 'isBuyItem', 'isTradeItem'));
     }
 }
