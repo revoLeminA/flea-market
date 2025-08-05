@@ -30,7 +30,7 @@ class ChatMessage extends Model
         $this->chat_id = $chat_id;
         $this->sender_id = $sender_id;
         $this->message = $chatMessage;
-        $this->image = 'storage/' . $dir . '/' . $file_name;
+        $this->image = ($dir && $file_name) ? 'storage/' . $dir . '/' . $file_name : null;
         $this->save();
     }
 }

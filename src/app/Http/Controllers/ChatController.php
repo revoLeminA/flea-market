@@ -20,12 +20,11 @@ class ChatController extends Controller
     {
         $chatter = Auth::user();
         $thisChat = Chat::where('item_id', $request->item_id)
-            ->where(function($query) use($chatter) {
+            ->where(function ($query) use ($chatter) {
                 $query->where('buyer_id', $chatter->id)->orWhere('seller_id', $chatter->id);
             })
             ->first();
-        if ($thisChat === null)
-        {
+        if ($thisChat === null) {
             $sellerId = Item::where('id', $request->item_id)->first()->user_id;
             $chatData->chatStore($chatter->id, $sellerId, $request->item_id);
             $thisChat = Chat::where('item_id', $request->item_id)
@@ -65,25 +64,27 @@ class ChatController extends Controller
         ));
     }
 
+    // 取引チャット機能
     public function create(ChatMessageRequest $request, ChatMessage $chatMessageData, ChatNotification $chatNotificationData)
     {
         $chatter = Auth::user();
+        // 表示中のチャット
         $thisChat = Chat::where('item_id', $request->item_id)
             ->where(function ($query) use ($chatter) {
                 $query->where('buyer_id', $chatter->id)->orWhere('seller_id', $chatter->id);
             })->first();
+        // 取引相手
         if ($chatter->id === $thisChat->buyer_id) {
             $partner = User::where('id', $thisChat->seller_id)->first();
         } else if ($chatter->id === $thisChat->seller_id) {
             $partner = User::where('id', $thisChat->buyer_id)->first();
         }
         $chatMessage = $request->message;
+        // 最新のチャット通知
         $latestChatNotification = ChatNotification::where('chat_id', $thisChat->id)->latest()->first();
         $messageCount = 1;
-        if ($latestChatNotification->receiver_id === $partner->id)
-        {
+        if (!is_null($latestChatNotification) && $latestChatNotification->receiver_id === $partner->id) {
             $messageCount = $latestChatNotification->message_count + 1;
-
         } else {
             while (ChatNotification::where('chat_id', $thisChat->id)->where('receiver_id', $chatter->id)->where('is_read', false)->first() !== null) {
                 $tmpChatNotification = ChatNotification::where('chat_id', $thisChat->id)->where('receiver_id', $chatter->id)->where('is_read', false)->first();
@@ -94,8 +95,9 @@ class ChatController extends Controller
             }
         }
 
-        if ($request->image !== null)
-        {
+        $dir = null;
+        $file_name = null;
+        if ($request->image !== null) {
             $dir = 'images';
             $file_name = $request->file('image')->getClientOriginalname();
             $request->file('image')->storeAs('public/' . $dir, $file_name);
@@ -125,11 +127,10 @@ class ChatController extends Controller
         $thisChatMessage = ChatMessage::where('id', $request->message_id)->first();
         $thisChatNotification = ChatNotification::where('created_at', $thisChatMessage->created_at)->first();
 
-        if($thisChatNotification->is_read === false && $thisChatNotification->message_count > 1)
-        {
+        if ($thisChatNotification->is_read === false && $thisChatNotification->message_count > 1) {
             $tmpChatNotification = ChatNotification::where('is_read', false)->first();
             $tmpChatNotification->update([
-                'message_count' => $tmpChatNotification->message_count-1,
+                'message_count' => $tmpChatNotification->message_count - 1,
             ]);
             $tmpChatNotification->touch();
         }
