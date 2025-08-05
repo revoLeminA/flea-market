@@ -66,7 +66,7 @@
                 <ul class="container-nav__list">
                     <li class="container-nav__item"><a href="/mypage?tab=sell" @class(['red' => $isSellItem])>出品した商品</a></li>
                     <li class="container-nav__item"><a href="/mypage?tab=buy" @class(['red' => $isBuyItem])>購入した商品</a></li>
-                    <li class="container-nav__item"><a href="/mypage?tab=trade" @class(['red' => $isTradeItem])>取引中の商品 <label>{{count($chatNotificationCounts)}}</label></a></li>
+                    <li class="container-nav__item"><a href="/mypage?tab=trade" @class(['red' => $isTradeItem])>取引中の商品 <label>{{$chatNotificationCountSum}}</label></a></li>
                 </ul>
             </nav>
             <div class="container__list">
@@ -78,7 +78,7 @@
                     @endif
                             <div class="container__item-img">
                                 <img src="{{ asset($item->item_image) }}" alt="">
-                                @if (isset($chatNotificationCounts[$item->id]) && $chatNotificationCounts[$item->id] > 0)
+                                @if (request()->fullUrl() === url('/mypage?tab=trade') && isset($chatNotificationCounts[$item->id]) && $chatNotificationCounts[$item->id] > 0)
                                     <label class="label__notification-count">{{ $chatNotificationCounts[$item->id] }}</label>
                                 @endif
                             </div>

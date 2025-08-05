@@ -46,6 +46,10 @@ class ChatController extends Controller
 
         $items = Item::join('chats', 'items.id', '=', 'chats.item_id')
             ->leftJoin('chat_messages', 'chats.id', '=', 'chat_messages.chat_id')
+            ->where(function ($query) use ($chatter) {
+            $query->where('chats.buyer_id', $chatter->id)->orWhere('chats.seller_id', $chatter->id);
+            })
+            ->where('chats.is_completed', '!=', true)
             ->select('items.*')
             ->selectRaw('MAX(chat_messages.created_at) as latest_message_at')
             ->groupBy('items.id')
@@ -84,8 +88,10 @@ class ChatController extends Controller
         $latestChatNotification = ChatNotification::where('chat_id', $thisChat->id)->latest()->first();
         $messageCount = 1;
         if (!is_null($latestChatNotification) && $latestChatNotification->receiver_id === $partner->id) {
+            // 最新のチャット通知が存在し、通知の受け手が取引相手の場合は、未読メッセージカウントを+1する
             $messageCount = $latestChatNotification->message_count + 1;
         } else {
+            // 最新のチャット通知が存在しない、または通知の受け手が取引相手ではない場合は、未読レコードに既読フラグをつける
             while (ChatNotification::where('chat_id', $thisChat->id)->where('receiver_id', $chatter->id)->where('is_read', false)->first() !== null) {
                 $tmpChatNotification = ChatNotification::where('chat_id', $thisChat->id)->where('receiver_id', $chatter->id)->where('is_read', false)->first();
                 $tmpChatNotification->update([
